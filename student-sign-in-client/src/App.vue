@@ -32,40 +32,40 @@ export default {
       mostRecentStudent: {}
     }
   },
+  mounted() {
+    // load all student - make request to API
+    this.updateStudents()
+
+  },
   methods: {
+    updateStudents() {
+      this.$student_api.getAllStudents().then( students => {
+        this.students = students
+      })
+      .catch(err => alert('Unable to fatch student list'))
+     
+    },
     newStudentAdded (student){
-      this.students.push(student)
-      this.students.sort(function(s1, s2){
-        return s1.name.toLowerCase() < s2.name.toLowerCase() ? -1 : 1
+      this.$student_api.addStudent(student).then( () =>{
+        this.updateStudents()
+      })
+      .catch(err => {
+        let msg = err.response.data.join(',')
+        alert('Error adding student\n' + msg)
       })
     },
     studentArrivedOrLeft(student, present) {
-      // find students in aaray of students
-      // update present attribute
-
-      let updateStudent = this.students.find(function(s) {
-        if (s.name === student.name && s.starID === student.starID){
-          // this is the student to update
-          return true
-        }
-      })
-
-      if (updateStudent){ // updates students
-        updateStudent.present = present
-        this.mostRecentStudent = updateStudent
-      }
+      student.present = present // update present value
+      this.$student_api.updateStudent(student).then( () => {
+        this.mostRecentStudent = student
+        this.updateStudents()   // latest student information
+      }).catch( () => alert('Unable a update student'))
     },
-    studentDeleted(student){ // rename studentDeleted
-      // filter returns a new array of all students for whom the function returns true
-      this.students = this.students.filter(function(s) {
-        if (s != student){
-          return true
-        }
-
-      })
-
-      // clear welcome/goodbye
-      this.mostRecentStudent = {} // empty object
+    studentDeleted(student){ 
+      this.$student_api.deleteStudent(student.id).then( () => {
+        this.updateStudents()
+        this.mostRecentStudent = {} // clear welcome/goodbye message
+      }).catch( () => alert('Unable to delete student') )
     }
   }
 }

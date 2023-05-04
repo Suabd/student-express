@@ -4,14 +4,19 @@ module.exports = (sequelize, DataTypes) => {
 
         name: {
             type : DataTypes.STRING,
+            allowNull: false
         },
 
         starID: { 
             type: DataTypes.STRING,
+            allowNull: false,
+            unique: true
         },
 
         present: {
-            typr: DataTypes.BOOLEAN,
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
         }       
     })
     // force specifies whether to drop the table or not

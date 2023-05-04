@@ -2,7 +2,7 @@
     <div>
 
         <!-- Template/HTML here -->
-    <div class="alert alert-danger" v-if="errors.length = 0" >
+    <div class="alert alert-danger" v-if="errors.length > 0" >
         <ul>
             <li v-for="error in errors" v-bind:key="error"> {{ error }}</li>
         </ul>
