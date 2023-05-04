@@ -27,7 +27,7 @@ router.post('/students', function(req, res, next){
 })
 
 // todo edit a student
-router.patch('/students:id', function(req, res, next){
+router.patch('/students/:id', function(req, res, next){
     // if request is to / students/100
     // studentID will be 100
     let studentID = req.params.id
