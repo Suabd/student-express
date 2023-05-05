@@ -4,9 +4,9 @@
         "dialect": "sqlite"
     },
     "production": { 
-        "username": "Your_USERNAME",
-        "host": "YOUR_DATABASE_SERVER.database.windows.net",
-        "database": "YOUR_DATABASE",
+        "username": "suban",
+        "host": "student-sign-in-database-server-suban.database.windows.net",
+        "database": "student-sign-in-database",
         "dialect": "mssql",
         "ssl": true,
         "dialectOptions": {
